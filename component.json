@@ -1,0 +1,242 @@
+{
+    "title": "Authentiq Connect",
+    "description": "Authentiq Connect OAuth 2.0 and OpenID Connect API reference.\nLearn about [Authentiq ID](https://www.authentiq.com/) or check out the [Authentiq Connect](https://developers.authentiq.com) developer documentation.\n",
+    "docsUrl": "https://developers.authentiq.com/",
+    "url": "https://api.apis.guru/v2/specs/authentiq.io/1.0/swagger.json",
+    "envVars": {
+        "OAUTH_CLIENT_ID": {
+            "description": "OAuth Client ID"
+        },
+        "OAUTH_CLIENT_SECRET": {
+            "description": "OAuth Client Secret"
+        }
+    },
+    "credentials": {
+        "fields": {
+            "server": {
+                "label": "Server",
+                "viewClass": "SelectView",
+                "model": [
+                    "https://connect.authentiq.io/",
+                    "--- Custom URL"
+                ],
+                "required": true
+            },
+            "otherServer": {
+                "label": "Custom Server URL",
+                "viewClass": "TextFieldView"
+            },
+            "client_registration_token": {
+                "label": "Authorization (client_registration_token)",
+                "viewClass": "TextFieldView",
+                "note": "Client management via registration token."
+            },
+            "client_secret": {
+                "label": "Session management by confidential clients.",
+                "viewClass": "OAuthFieldView"
+            },
+            "oauth_code": {
+                "label": "End-user authentication.",
+                "viewClass": "OAuthFieldView"
+            },
+            "oauth_implicit": {
+                "label": "End-user authentication.",
+                "viewClass": "OAuthFieldView"
+            },
+            "user_jwt": {
+                "label": "Session management by Authentiq ID.",
+                "viewClass": "OAuthFieldView"
+            }
+        },
+        "oauth2": {
+            "client_id": "{{OAUTH_CLIENT_ID}}",
+            "client_secret": "{{OAUTH_CLIENT_SECRET}}",
+            "token_uri": "https://connect.authentiq.io/token"
+        }
+    },
+    "triggers": {
+        "startFlow": {
+            "main": "./lib/triggers/startFlow.js",
+            "type": "polling",
+            "title": "Start Flow",
+            "fields": {}
+        }
+    },
+    "actions": {
+        "authorize": {
+            "main": "./lib/actions/authorize.js",
+            "title": "Authenticate a user",
+            "description": "Start a session with Authentiq Connect to authenticate a user.\n\n```\nGET https://connect.authentiq.io/authorize?client_id=<your-client-id>&response_type=code+id_token&scope=openid+email&redirect_uri=<your-redirect-uri>&state=0123456789\n```\n\nThis endpoint also supports the POST method.\n",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/authorize.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "client": {
+            "main": "./lib/actions/client.js",
+            "title": "List clients",
+            "description": "Retrieve a list of clients.\n",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/client.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "createClient": {
+            "main": "./lib/actions/createClient.js",
+            "title": "Register a client",
+            "description": "Register a new client with this Authentiq Connect provider.\n\nThis endpoint is compatible with [OIDC's Client Registration](http://openid.net/specs/openid-connect-registration-1_0.html) extension.\n",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                },
+                "body_content_type": {
+                    "viewClass": "SelectView",
+                    "label": "Body Content-Type",
+                    "required": true,
+                    "prompt": "Choose a body Content-Type.",
+                    "model": {
+                        "application/json": "application/json",
+                        "multipart/form-data": "multipart/form-data",
+                        "application/x-www-form-urlencoded": "application/x-www-form-urlencoded"
+                    }
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/createClient.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "clientClient_id": {
+            "main": "./lib/actions/clientClient_id.js",
+            "title": "Delete a client",
+            "description": "Delete a previously registered client.\n",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/clientClient_id.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "getClient": {
+            "main": "./lib/actions/getClient.js",
+            "title": "View a client",
+            "description": "Retrieve the configuration of a previously registered client.\n",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/getClient.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "updateClient": {
+            "main": "./lib/actions/updateClient.js",
+            "title": "Update a client",
+            "description": "Update the configuration of a previously registered client.\n",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                },
+                "body_content_type": {
+                    "viewClass": "SelectView",
+                    "label": "Body Content-Type",
+                    "required": true,
+                    "prompt": "Choose a body Content-Type.",
+                    "model": {
+                        "application/json": "application/json",
+                        "multipart/form-data": "multipart/form-data",
+                        "application/x-www-form-urlencoded": "application/x-www-form-urlencoded"
+                    }
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/updateClient.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "token": {
+            "main": "./lib/actions/token.js",
+            "title": "Obtain an ID Token",
+            "description": "Exchange en authorization code for an ID Token or Access Token.\n\nThis endpoint supports both `client_secret_basic` (default) and `client_secret_basic` authentication methods, as specified by the client's `token_endpoint_auth_method`.\n",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/token.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "userInfo": {
+            "main": "./lib/actions/userInfo.js",
+            "title": "Retrieve a user profile",
+            "description": "Use this endpoint to retrieve a user's profile in case you are unable to parse an ID Token or you've not already obtained enough details from the ID Token via the Token Endpoint.\n",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/userInfo.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "authorizeIframe": {
+            "main": "./lib/actions/authorizeIframe.js",
+            "title": "Include a session iframe",
+            "description": "An OpenID Connect Session Management iframe to facilitate e.g. single sign-on or remote logouts.\n\nThe iframe implements the OIDC postMessage-based [change notification protocol](http://openid.net/specs/openid-connect-session-1_0.html#ChangeNotification) via which a client can receive notifications about session state changes.\n",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/authorizeIframe.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        }
+    }
+}

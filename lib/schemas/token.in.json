@@ -1,0 +1,38 @@
+{
+    "type": "object",
+    "properties": {
+        "Authorization": {
+            "required": false,
+            "type": "string"
+        },
+        "requestBody": {
+            "type": "object",
+            "properties": {
+                "client_id": {
+                    "description": "The registered client ID.\n",
+                    "type": "string"
+                },
+                "client_secret": {
+                    "description": "The registered client ID secret.\n",
+                    "type": "string",
+                    "format": "password"
+                },
+                "grant_type": {
+                    "description": "The authorization grant type, must be `authorization_code`.\n",
+                    "type": "string"
+                },
+                "code": {
+                    "description": "The authorization code previously obtained from the Authentication endpoint.\n",
+                    "type": "string"
+                },
+                "redirect_uri": {
+                    "description": "The redirect URL that was used previously with the Authentication endpoint.\n",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "client_id"
+            ]
+        }
+    }
+}

@@ -1,0 +1,52 @@
+{
+    "type": "object",
+    "properties": {
+        "client_id": {
+            "required": true,
+            "type": "string"
+        },
+        "response_type": {
+            "required": true,
+            "type": "string"
+        },
+        "scope": {
+            "required": true,
+            "type": "string"
+        },
+        "redirect_uri": {
+            "required": true,
+            "type": "string"
+        },
+        "state": {
+            "required": true,
+            "type": "string"
+        },
+        "response_mode": {
+            "required": false,
+            "type": "string"
+        },
+        "nonce": {
+            "required": false,
+            "type": "string"
+        },
+        "display": {
+            "required": false,
+            "type": "string",
+            "default": "page"
+        },
+        "prompt": {
+            "required": false,
+            "type": "string",
+            "default": "login"
+        },
+        "max_age": {
+            "required": false,
+            "type": "integer",
+            "default": 0
+        },
+        "ui_locales": {
+            "required": false,
+            "type": "string"
+        }
+    }
+}
